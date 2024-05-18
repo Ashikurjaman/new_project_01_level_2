@@ -1,3 +1,7 @@
-import { express } from 'express';
+import express from 'express';
+import { StudentController } from './student.controller';
 
 const router = express.Router();
+
+// will added controller
+router.post('/create-student', StudentController.createStudent);
