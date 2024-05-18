@@ -1,11 +1,13 @@
-import { Schema, model, connect } from 'mongoose';
+import {} from 'mongoose';
 
-interface Student {
-  name: {
-    firstName: string;
-    middleName?: string;
-    lastName: string;
-  };
+export type UserName = {
+  firstName: string;
+  middleName?: string;
+  lastName: string;
+};
+export interface Student {
+  id: string;
+  name: UserName;
   gender: 'male' | 'female';
   contactNo: string;
   emergencyContactNo: string;
@@ -14,4 +16,5 @@ interface Student {
   avatar?: string;
   presentAddress: string;
   paramentAddress: string;
+  isActive: 'active' | 'UnActive';
 }
