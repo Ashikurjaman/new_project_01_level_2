@@ -5,7 +5,7 @@ export type UserName = {
   middleName?: string;
   lastName: string;
 };
-export interface Student {
+export type Student = {
   id: string;
   name: UserName;
   gender: 'male' | 'female';
@@ -17,4 +17,4 @@ export interface Student {
   presentAddress: string;
   paramentAddress: string;
   isActive: 'active' | 'UnActive';
-}
+};
