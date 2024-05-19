@@ -17,17 +17,25 @@ const userNameSchema = new Schema<UserName>({
 
 // create schema
 const studentSchema = new Schema<Student>({
-  id: { type: String },
+  id: { type: String, required: true, unique: true },
   name: userNameSchema,
-  gender: ['male', 'female'],
+  gender: {
+    type: String,
+    enum: ['male', 'female', 'others'],
+    message: '{ VALUE } is not valid',
+  },
   contactNo: { type: String },
   emergencyContactNo: { type: String },
   bloodGroup: ['A+', 'A-', 'B-', 'B+', 'AB-', 'AB+'],
-  email: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
   avatar: { type: String },
   presentAddress: { type: String },
   paramentAddress: { type: String },
-  isActive: ['active', 'UnActive'],
+  isActive: {
+    type: String,
+    enum: ['Active', 'UnActive'],
+    required: true,
+  },
 });
 
 // create model
