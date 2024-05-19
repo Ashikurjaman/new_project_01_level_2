@@ -4,14 +4,14 @@ import { Student, UserName } from './student.interface';
 const userNameSchema = new Schema<UserName>({
   firstName: {
     type: String,
-    required: true,
+    required: [true, 'First name can not be more then 20 characters'],
   },
   middleName: {
     type: String,
   },
   lastName: {
     type: String,
-    required: true,
+    required: [true, 'Last name can not be more then 20 characters'],
   },
 });
 

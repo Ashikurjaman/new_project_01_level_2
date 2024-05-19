@@ -1,5 +1,3 @@
-import {} from 'mongoose';
-
 export type UserName = {
   firstName: string;
   middleName?: string;
