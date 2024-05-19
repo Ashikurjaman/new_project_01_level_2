@@ -1,5 +1,5 @@
 import { Model, Schema, model } from 'mongoose';
-import { Student, UserName } from './student/student.interface';
+import { Student, UserName } from './student.interface';
 
 const userNameSchema = new Schema<UserName>({
   firstName: {
