@@ -5,6 +5,7 @@ const createStudent = async (req: Request, res: Response) => {
   // will send response
   try {
     const { student: studentData } = req.body;
+    console.log(studentData);
     const result = await studentServices.createStudentIntoDb(studentData);
     res.status(200).json({
       success: true,
