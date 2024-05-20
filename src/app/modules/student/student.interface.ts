@@ -14,5 +14,5 @@ export type Student = {
   avatar?: string;
   presentAddress: string;
   paramentAddress: string;
-  isActive: 'active' | 'UnActive';
+  isActive: 'Active' | 'UnActive';
 };
