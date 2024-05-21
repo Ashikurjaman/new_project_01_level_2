@@ -1,6 +1,12 @@
 import { Schema, model } from 'mongoose';
-import { Student, UserName } from './student.interface';
+import {
+  Student,
+  StudentMethods,
+  StudentUserModel,
+  UserName,
+} from './student.interface';
 import validator from 'validator';
+import { string } from 'joi';
 
 const userNameSchema = new Schema<UserName>({
   firstName: {
@@ -34,7 +40,7 @@ const userNameSchema = new Schema<UserName>({
 });
 
 // create schema
-const studentSchema = new Schema<Student>({
+const studentSchema = new Schema<Student, StudentUserModel, StudentMethods>({
   id: { type: String, required: true, unique: true },
   name: userNameSchema,
   gender: {
@@ -64,5 +70,13 @@ const studentSchema = new Schema<Student>({
   },
 });
 
+studentSchema.methods.isUserExist = async function (id: string) {
+  const existingUser = await StudentModel.findOne({ id });
+  return existingUser;
+};
+
 // create model
-export const StudentModel = model<Student>('Student', studentSchema);
+export const StudentModel = model<Student, StudentUserModel>(
+  'Student',
+  studentSchema,
+);
