@@ -3,38 +3,38 @@ import { studentServices } from './student.service';
 // import { z } from 'zod';
 import studentJoiSchema from './student.validate';
 
-const createStudent = async (req: Request, res: Response) => {
-  // will send response
-  try {
-    // using zod for validation
+// const createStudent = async (req: Request, res: Response) => {
+//   // will send response
+//   try {
+//     // using zod for validation
 
-    const { student: studentData } = req.body;
+//     const { student: studentData } = req.body;
 
-    // using joi for validation
-    const { error, value } = studentJoiSchema.validate(studentData);
-    const result = await studentServices.createStudentIntoDb(studentData);
+//     // using joi for validation
+//     const { error, value } = studentJoiSchema.validate(studentData);
+//     const result = await studentServices.createStudentIntoDb(studentData);
 
-    // if (error) {
-    //   res.status(500).json({
-    //     success: false,
-    //     message: 'Something went wrong',
-    //     error: error.details,
-    //   });
-    // }
+//     // if (error) {
+//     //   res.status(500).json({
+//     //     success: false,
+//     //     message: 'Something went wrong',
+//     //     error: error.details,
+//     //   });
+//     // }
 
-    res.status(200).json({
-      success: true,
-      message: 'Student is created successfully',
-      data: result,
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: 'Something went wrong',
-      error: error,
-    });
-  }
-};
+//     res.status(200).json({
+//       success: true,
+//       message: 'Student is created successfully',
+//       data: result,
+//     });
+//   } catch (error) {
+//     res.status(500).json({
+//       success: false,
+//       message: 'Something went wrong',
+//       error: error,
+//     });
+//   }
+// };
 
 const getStudent = async (req: Request, res: Response) => {
   try {

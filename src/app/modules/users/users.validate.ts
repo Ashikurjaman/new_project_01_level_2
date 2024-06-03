@@ -1,4 +1,3 @@
-import { optional } from 'joi';
 import { z } from 'zod';
 
 const userValidationSchema = z.object({
