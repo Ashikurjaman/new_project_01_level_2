@@ -73,7 +73,6 @@ const getSingleStudent = async (req: Request, res: Response) => {
 };
 
 export const StudentController = {
-  createStudent,
   getStudent,
   getSingleStudent,
 };

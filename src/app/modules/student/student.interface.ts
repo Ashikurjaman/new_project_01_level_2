@@ -1,4 +1,4 @@
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 
 export type UserName = {
   firstName: string;
@@ -7,6 +7,7 @@ export type UserName = {
 };
 export type Student = {
   id: string;
+  user: Types.ObjectId;
   name: UserName;
   gender: 'male' | 'female';
   contactNo: string;
@@ -16,7 +17,6 @@ export type Student = {
   avatar?: string;
   presentAddress: string;
   paramentAddress: string;
-  isActive: 'Active' | 'UnActive';
 };
 
 export type StudentMethods = {

@@ -42,6 +42,12 @@ const userNameSchema = new Schema<UserName>({
 // create schema
 const studentSchema = new Schema<Student, StudentUserModel, StudentMethods>({
   id: { type: String, required: true, unique: true },
+  user: {
+    type: Schema.Types.ObjectId,
+    require: [true, 'User id is required'],
+    unique: true,
+    ref: 'User',
+  },
   name: userNameSchema,
   gender: {
     type: String,
@@ -63,11 +69,6 @@ const studentSchema = new Schema<Student, StudentUserModel, StudentMethods>({
   avatar: { type: String },
   presentAddress: { type: String, trim: true },
   paramentAddress: { type: String, trim: true },
-  isActive: {
-    type: String,
-    enum: ['Active', 'UnActive'],
-    required: true,
-  },
 });
 
 studentSchema.methods.isUserExist = async function (id: string) {
