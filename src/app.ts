@@ -1,7 +1,8 @@
-import express, { Application } from 'express';
+import express, { Application, NextFunction, Request, Response } from 'express';
 import cors from 'cors';
 import { StudentRoutes } from './app/modules/student/student.router';
 import { UserRouter } from './app/modules/users/users.router';
+import { globalErrorHandler } from './app/middleware/globalErrorHandler';
 const app: Application = express();
 
 app.use(express.json());
@@ -15,6 +16,7 @@ app.use('/api/v1/users', UserRouter);
 //   res.send('Hello World!');
 // });
 
+app.use(globalErrorHandler);
+app.use();
 console.log(process.cwd());
-
 export default app;

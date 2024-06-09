@@ -53,6 +53,7 @@ const studentSchema = new Schema<Student, StudentUserModel, StudentMethods>({
     type: String,
     enum: ['male', 'female', 'others'],
     message: '{ VALUE } is not valid',
+    required: true,
   },
   contactNo: { type: String },
   emergencyContactNo: { type: String },
