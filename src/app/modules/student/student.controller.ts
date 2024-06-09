@@ -63,7 +63,7 @@ const getSingleStudent = async (req: Request, res: Response) => {
       message: 'Student one Data Get',
       data: result,
     });
-  } catch (error: any) {
+  } catch (error:any) {
     res.status(500).json({
       success: false,
       message: error.message || 'Something went wrong',

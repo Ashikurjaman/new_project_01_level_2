@@ -12,7 +12,7 @@ const userNameSchema = new Schema<UserName>({
   firstName: {
     type: String,
     trim: true,
-    required: [true, 'First name can not be more then 20 characters'],
+    required: [true, 'First name is required'],
     validate: function (value: string) {
       const firstName =
         value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
@@ -30,7 +30,7 @@ const userNameSchema = new Schema<UserName>({
   lastName: {
     type: String,
     trim: true,
-    required: [true, 'Last name can not be more then 20 characters'],
+    required: [true, 'Last name is required'],
     validate: function (value: string) {
       const firstName =
         value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
@@ -44,7 +44,7 @@ const studentSchema = new Schema<Student, StudentUserModel, StudentMethods>({
   id: { type: String, required: true, unique: true },
   user: {
     type: Schema.Types.ObjectId,
-    require: [true, 'User id is required'],
+    required: [true, 'User id is required'],
     unique: true,
     ref: 'User',
   },
@@ -56,7 +56,10 @@ const studentSchema = new Schema<Student, StudentUserModel, StudentMethods>({
   },
   contactNo: { type: String },
   emergencyContactNo: { type: String },
-  bloodGroup: ['A+', 'A-', 'B-', 'B+', 'AB-', 'AB+'],
+  bloodGroup: {
+    type: String,
+    enum: ['A+', 'A-', 'B-', 'B+', 'AB-', 'AB+'],
+  },
   email: {
     type: String,
     required: true,

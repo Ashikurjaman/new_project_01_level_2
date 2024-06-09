@@ -1,5 +1,7 @@
 import { model, Schema } from 'mongoose';
+import bcrypt from 'bcrypt'
 import { TUser } from './users.interface';
+import config from '../../config';
 
 const userSchema = new Schema<TUser>(
   {
@@ -17,10 +19,12 @@ const userSchema = new Schema<TUser>(
       default: true,
     },
     role: {
+      type: String,
       enum: ['student', 'faculty', 'admin'],
       required: true,
     },
     status: {
+      type: String,
       enum: ['in-progress', 'blocked'],
       required: true,
       default: 'in-progress',
@@ -34,5 +38,15 @@ const userSchema = new Schema<TUser>(
     timestamps: true,
   },
 );
+
+userSchema.pre;
+'save',
+  async function (next) {
+    const user = this;
+    user.password=await bcrypt.hash(
+      user.password, Number(config.);
+    )
+    
+  };
 
 export const User = model<TUser>('User', userSchema);
