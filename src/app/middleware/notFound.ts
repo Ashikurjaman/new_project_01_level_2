@@ -1,15 +1,12 @@
 import { Request, Response } from 'express';
-import status from 'http-status';
+import httpStatus from 'http-status';
 
-const notFound = (
-  err: any,
-  req: Request,
-  res: Response,
-  next: NewableFunction,
-) => {
-  return res.status(status.NOT_FOUND).json({
+const notFound = (req: Request, res: Response) => {
+  return res.status(httpStatus.NOT_FOUND).json({
     success: false,
-    message: 'Api Not Found',
+    message: 'Api Not Found !!',
     error: '',
   });
 };
+
+export default notFound;
