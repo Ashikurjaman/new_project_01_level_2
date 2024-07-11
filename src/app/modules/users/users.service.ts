@@ -1,5 +1,5 @@
 import { Student } from '../student/student.interface';
-import { StudentModel } from '../student/student.model';
+import { StudentModels } from '../student/student.model';
 import { User } from './users.model';
 import config from '../../config';
 import { TUser } from './users.interface';
@@ -25,7 +25,7 @@ const createStudentIntoDb = async (password: string, student: Student) => {
     // set id ,_id ass user
     student.id = newUser.id;
     student.user = newUser._id;
-    const newStudent = await StudentModel.create(student);
+    const newStudent = await StudentModels.create(student);
     return newStudent;
   }
 };
