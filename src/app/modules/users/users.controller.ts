@@ -1,13 +1,13 @@
 import { RequestHandler } from 'express';
-import studentJoiSchema from '../student/student.validate';
 import { userService } from './users.service';
 import sendResponse from '../../utils/sendRespond';
 import httpStatus from 'http-status';
 import catchAsync from '../../utils/catchAsync';
+import { userValidation } from './users.validate';
 
 const createStudent: RequestHandler = catchAsync(async (req, res, next) => {
   const { password, student: studentData } = req.body;
-  const { error, value } = studentJoiSchema.validate(studentData);
+  // const { error, value } = userValidation.validate(studentData);
   const result = await userService.createStudentIntoDb(password, studentData);
   sendResponse(res, {
     statusCode: httpStatus.OK,
