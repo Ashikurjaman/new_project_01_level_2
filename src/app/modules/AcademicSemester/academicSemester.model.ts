@@ -39,7 +39,7 @@ const academicSchema = new Schema<TAcademicSemester>(
   },
 );
 
-export const User = model<TAcademicSemester>(
+export const AcademicSemester = model<TAcademicSemester>(
   'AcademicSemester',
   academicSchema,
 );

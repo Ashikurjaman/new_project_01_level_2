@@ -2,12 +2,13 @@ import { RequestHandler } from 'express';
 import sendResponse from '../../utils/sendRespond';
 import httpStatus from 'http-status';
 import catchAsync from '../../utils/catchAsync';
+import { AcademicSemesterService } from './academicSemester.service';
 
 const createAcademicSemester: RequestHandler = catchAsync(
   async (req, res, next) => {
-    //   const { password, student: studentData } = req.body;
-    //   // const { error, value } = userValidation.validate(studentData);
-    //   const result = await userService.createStudentIntoDb(password, studentData);
+    const result = await AcademicSemesterService.createAcademicSemesterIntoDB(
+      req.body,
+    );
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
