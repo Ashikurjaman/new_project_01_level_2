@@ -16,11 +16,11 @@ const academicSchema = new Schema<TAcademicSemester>(
 
     code: {
       type: String,
-      required: true,
+
       enum: AcademicSemesterCode,
     },
     year: {
-      type: Date,
+      type: String,
       required: true,
     },
     startMonth: {
@@ -38,6 +38,16 @@ const academicSchema = new Schema<TAcademicSemester>(
     timestamps: true,
   },
 );
+academicSchema.pre('save', async function (next) {
+  const isSemesterExists = await AcademicSemester.findOne({
+    year: this.year,
+    name: this.name,
+  });
+  if (isSemesterExists) {
+    throw new Error('Academic Semester Already Exists !');
+  }
+  next();
+});
 
 export const AcademicSemester = model<TAcademicSemester>(
   'AcademicSemester',

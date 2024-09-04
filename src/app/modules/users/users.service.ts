@@ -1,10 +1,10 @@
-import { Student } from '../student/student.interface';
-import { StudentModels } from '../student/student.model';
 import { User } from './users.model';
 import config from '../../config';
 import { TUser } from './users.interface';
+import { Student } from '../student/student.model';
+import { TStudent } from '../student/student.interface';
 
-const createStudentIntoDb = async (password: string, student: Student) => {
+const createStudentIntoDb = async (password: string, student: TStudent) => {
   // create a empty object
   const userData: Partial<TUser> = {};
 
@@ -25,7 +25,7 @@ const createStudentIntoDb = async (password: string, student: Student) => {
     // set id ,_id ass user
     student.id = newUser.id;
     student.user = newUser._id;
-    const newStudent = await StudentModels.create(student);
+    const newStudent = await Student.create(student);
     return newStudent;
   }
 };
