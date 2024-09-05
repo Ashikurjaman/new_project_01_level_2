@@ -142,14 +142,14 @@ const studentSchema = new Schema<TStudent, StudentModel>(
       type: Boolean,
       default: false,
     },
-    academicDepartment: {
-      type: Schema.Types.ObjectId,
-      ref: 'AcademicDepartment',
-    },
-    academicFaculty: {
-      type: Schema.Types.ObjectId,
-      ref: 'AcademicFaculty',
-    },
+    // academicDepartment: {
+    //   type: Schema.Types.ObjectId,
+    //   ref: 'AcademicDepartment',
+    // },
+    // academicFaculty: {
+    //   type: Schema.Types.ObjectId,
+    //   ref: 'AcademicFaculty',
+    // },
   },
   {
     toJSON: {

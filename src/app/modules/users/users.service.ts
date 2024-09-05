@@ -3,6 +3,7 @@ import config from '../../config';
 import { TUser } from './users.interface';
 import { Student } from '../student/student.model';
 import { TStudent } from '../student/student.interface';
+import { TAcademicSemester } from '../AcademicSemester/academicSemester.Interface';
 
 const createStudentIntoDb = async (password: string, student: TStudent) => {
   // create a empty object
@@ -12,9 +13,11 @@ const createStudentIntoDb = async (password: string, student: TStudent) => {
 
   userData.password = password || (config.default_password as string);
 
+  const generateID = (payload: TAcademicSemester) => {};
   // set student role
   userData.role = 'student';
   // set id manually
+
   userData.id = '2024100101';
   // create user
   const newUser = await User.create(userData);
