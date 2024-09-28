@@ -45,6 +45,7 @@ const getOneAcademicSemester: RequestHandler = catchAsync(
 const getOneAcademicSemesterUpdate: RequestHandler = catchAsync(
   async (req, res, next) => {
     const id = req.params?.id;
+
     const result = await AcademicSemesterService.getOneAcademicSemesterUpdate(
       id,
       req.body,

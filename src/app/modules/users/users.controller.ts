@@ -3,7 +3,7 @@ import { userService } from './users.service';
 import sendResponse from '../../utils/sendRespond';
 import httpStatus from 'http-status';
 import catchAsync from '../../utils/catchAsync';
-import { userValidation } from './users.validate';
+
 
 const createStudent: RequestHandler = catchAsync(async (req, res, next) => {
   const { password, student: studentData } = req.body;
