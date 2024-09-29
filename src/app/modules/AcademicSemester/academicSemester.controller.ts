@@ -3,7 +3,7 @@ import sendResponse from '../../utils/sendRespond';
 import httpStatus from 'http-status';
 import catchAsync from '../../utils/catchAsync';
 import { AcademicSemesterService } from './academicSemester.service';
-import { AcademicSemester } from './academicSemester.model';
+
 
 const createAcademicSemester: RequestHandler = catchAsync(
   async (req, res, next) => {
