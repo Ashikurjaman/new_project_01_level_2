@@ -19,7 +19,9 @@ const updateAcademicFacultyIntoDb = async (
   id: string,
   payload: Partial<TAcademicFaculty>,
 ) => {
-  const result = AcademicFaculty.findByIdAndUpdate({ _id: id }, payload);
+  const result = AcademicFaculty.findByIdAndUpdate({ _id: id }, payload, {
+    new: true,
+  });
   return result;
 };
 

@@ -20,6 +20,9 @@ const updateAcademicDepartmentIntoDb = async (
   const result = await AcademicDepartment.findByIdAndUpdate(
     { _id: id },
     payload,
+    {
+      new: true,
+    },
   );
   return result;
 };
