@@ -12,7 +12,7 @@ const findId = async () => {
     },
   )
     .sort({
-      createdAt: 1,
+      createdAt: -1,
     })
     .lean();
 
