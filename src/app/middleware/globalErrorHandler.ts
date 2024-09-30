@@ -1,6 +1,8 @@
 import { ErrorRequestHandler, NextFunction, Request, Response } from 'express';
 import { ZodError, ZodIssue } from 'zod';
 import { TErrorResource } from '../interface/interface';
+import { handelZodError } from '../error/ZodError';
+import { handelValidationError } from '../error/ValidationError';
 
 export const globalErrorHandler: ErrorRequestHandler = (
   err,
@@ -17,24 +19,16 @@ export const globalErrorHandler: ErrorRequestHandler = (
       message: 'Something went wrong!',
     },
   ];
-  const handelZodError = (err: ZodError) => {
-    const errorSource: TErrorResource = err.issues.map((issue: ZodIssue) => {
-      return {
-        path: issue?.path[issue.path.length - 1],
-        message: issue.message,
-      };
-    });
 
-    const statusCode = 400;
-
-    return {
-      statusCode,
-      message: 'Zod Validation Error',
-      errorSource,
-    };
-  };
   if (err instanceof ZodError) {
     const simpleFide = handelZodError(err);
+    statusCode = simpleFide.statusCode;
+    message = simpleFide.message;
+    errorResource = simpleFide.errorSource;
+  }
+
+  if (err.name === 'ValidationError') {
+    const simpleFide = handelValidationError(err);
     statusCode = simpleFide.statusCode;
     message = simpleFide.message;
     errorResource = simpleFide.errorSource;
@@ -43,6 +37,7 @@ export const globalErrorHandler: ErrorRequestHandler = (
     success: false,
     message,
     errorResource,
-    error: err,
+    err,
+    stack: err.stack,
   });
 };
