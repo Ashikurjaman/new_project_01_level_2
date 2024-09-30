@@ -24,8 +24,19 @@ const getSingleStudent = catchAsync(async (req, res, next) => {
     data: result,
   });
 });
+const deletedStudent = catchAsync(async (req, res, next) => {
+  const studentId = req.params?.studentId;
+  const result = await studentServices.DeletedStudentFromDb(studentId);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Student data successfully found',
+    data: result,
+  });
+});
 
 export const StudentController = {
   getStudent,
   getSingleStudent,
+  deletedStudent,
 };
