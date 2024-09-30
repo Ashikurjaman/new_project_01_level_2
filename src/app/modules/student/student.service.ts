@@ -3,7 +3,9 @@ import { Student } from './student.model';
 import { AppError } from '../../error/AppError';
 import httpStatus from 'http-status';
 import { User } from '../users/users.model';
+import { TStudent } from './student.interface';
 
+// Get All Data
 const getStudentAllDataFromDB = async () => {
   const result = await Student.find()
     .populate('admissionSemester')
@@ -15,7 +17,7 @@ const getStudentAllDataFromDB = async () => {
     });
   return result;
 };
-
+// Get single Data
 const getStudentSingleDataFromDb = async (id: string) => {
   const result = await Student.findOne({ id })
     .populate('admissionSemester')
@@ -27,7 +29,39 @@ const getStudentSingleDataFromDb = async (id: string) => {
     });
   return result;
 };
+// update data
+const updateStudentData = async (id: string, payload: Partial<TStudent>) => {
+  const { name, guardian, localGuardian, ...remainingStudentData } = payload;
 
+  const modifiedDataUpdate: Record<string, unknown> = {
+    ...remainingStudentData,
+  };
+
+  if (name && Object.keys(name).length) {
+    for (const [key, value] of Object.entries(name)) {
+      modifiedDataUpdate[`name.${key}`] = value;
+    }
+    console.log(modifiedDataUpdate);
+  }
+  if (guardian && Object.keys(guardian).length) {
+    for (const [key, value] of Object.entries(guardian)) {
+      modifiedDataUpdate[`guardian.${key}`] = value;
+    }
+  }
+  if (localGuardian && Object.keys(localGuardian).length) {
+    for (const [key, value] of Object.entries(localGuardian)) {
+      modifiedDataUpdate[`localGuardian.${key}`] = value;
+    }
+  }
+  // console.log(modifiedDataUpdate);
+  const result = await Student.findOneAndUpdate({ id }, modifiedDataUpdate, {
+    new: true,
+    runValidators: true,
+  });
+
+  return result;
+};
+// Delete data
 const DeletedStudentFromDb = async (id: string) => {
   const findId = await Student.find({ id });
   if (!findId) {
@@ -71,4 +105,5 @@ export const studentServices = {
   getStudentAllDataFromDB,
   getStudentSingleDataFromDb,
   DeletedStudentFromDb,
+  updateStudentData,
 };
