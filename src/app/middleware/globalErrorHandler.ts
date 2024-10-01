@@ -4,6 +4,7 @@ import { TErrorResource } from '../interface/interface';
 import { handelZodError } from '../error/ZodError';
 import { handelValidationError } from '../error/ValidationError';
 import { handelCastError } from '../error/CastError';
+import { AppError } from '../error/AppError';
 
 export const globalErrorHandler: ErrorRequestHandler = (
   err,
@@ -36,6 +37,23 @@ export const globalErrorHandler: ErrorRequestHandler = (
     statusCode = simpleFide.statusCode;
     message = simpleFide.message;
     errorResource = simpleFide.errorSource;
+  } else if (err instanceof AppError) {
+    statusCode = err?.statusCode;
+    message = err?.message;
+    errorResource = [
+      {
+        path: '',
+        message: err?.message,
+      },
+    ];
+  } else if (err instanceof Error) {
+    message = err?.message;
+    errorResource = [
+      {
+        path: '',
+        message: err?.message,
+      },
+    ];
   }
   return res.status(statusCode).json({
     success: false,
