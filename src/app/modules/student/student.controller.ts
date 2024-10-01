@@ -4,15 +4,17 @@ import sendResponse from '../../utils/sendRespond';
 import httpStatus from 'http-status';
 import catchAsync from '../../utils/catchAsync';
 
-const getStudent = catchAsync(async (req, res, next) => {
-  const result = await studentServices.getStudentAllDataFromDB();
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: 'Student is created successfully',
-    data: result,
-  });
-});
+const getStudent: RequestHandler = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const result = await studentServices.getStudentAllDataFromDB(req.query);
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Student is created successfully',
+      data: result,
+    });
+  },
+);
 
 const getSingleStudent = catchAsync(async (req, res, next) => {
   const studentId = req.params?.studentId;
