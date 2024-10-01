@@ -3,6 +3,7 @@ import { ZodError, ZodIssue } from 'zod';
 import { TErrorResource } from '../interface/interface';
 import { handelZodError } from '../error/ZodError';
 import { handelValidationError } from '../error/ValidationError';
+import { handelCastError } from '../error/CastError';
 
 export const globalErrorHandler: ErrorRequestHandler = (
   err,
@@ -25,10 +26,13 @@ export const globalErrorHandler: ErrorRequestHandler = (
     statusCode = simpleFide.statusCode;
     message = simpleFide.message;
     errorResource = simpleFide.errorSource;
-  }
-
-  if (err.name === 'ValidationError') {
+  } else if (err.name === 'ValidationError') {
     const simpleFide = handelValidationError(err);
+    statusCode = simpleFide.statusCode;
+    message = simpleFide.message;
+    errorResource = simpleFide.errorSource;
+  } else if (err.name === 'CastError') {
+    const simpleFide = handelCastError(err);
     statusCode = simpleFide.statusCode;
     message = simpleFide.message;
     errorResource = simpleFide.errorSource;
