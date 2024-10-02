@@ -10,7 +10,7 @@ const getStudent: RequestHandler = catchAsync(
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
-      message: 'Student is created successfully',
+      message: 'Student Data Retrieve successfully',
       data: result,
     });
   },
