@@ -109,7 +109,7 @@ adminSchema.pre('aggregate', function (next) {
 });
 
 adminSchema.statics.isUserExists = async function (id: string) {
-  const existingUser = await Admin.find({ id });
+  const existingUser = await Admin.find({ _id: id });
   return existingUser;
 };
 
