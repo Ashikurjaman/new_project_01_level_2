@@ -105,7 +105,6 @@ const updateStudentData = async (id: string, payload: Partial<TStudent>) => {
     for (const [key, value] of Object.entries(name)) {
       modifiedDataUpdate[`name.${key}`] = value;
     }
-    console.log(modifiedDataUpdate);
   }
   if (guardian && Object.keys(guardian).length) {
     for (const [key, value] of Object.entries(guardian)) {
