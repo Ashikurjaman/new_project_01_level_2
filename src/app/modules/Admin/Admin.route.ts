@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get('/', AdminController.getAllAdmin);
 router.get('/:id', AdminController.getSingleAdmin);
-router.post(
+router.patch(
   '/:id',
   validateRequest(AdminValidations.updateAdminValidationSchema),
   AdminController.updateAdmin,

@@ -30,8 +30,8 @@ const getSingleFaculty: RequestHandler = catchAsync(
 const updateFaculty: RequestHandler = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
-    const payload = req.body;
-    const result = await FacultyServices.updateAdmin(id, payload);
+    const { faculty } = req.body;
+    const result = await FacultyServices.updateAdmin(id, faculty);
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,

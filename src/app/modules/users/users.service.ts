@@ -106,7 +106,7 @@ const createFacultyIntoDb = async (password: string, payload: TFaculty) => {
   const userData: Partial<TUser> = {};
   userData.password = password || (config.default_password as string);
 
-  userData.role = 'admin';
+  userData.role = 'faculty';
 
   const academicDepartMent = await AcademicDepartment.findById(
     payload.academicDepartment,

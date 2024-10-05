@@ -30,12 +30,13 @@ const getSingleAdmin: RequestHandler = catchAsync(
 const updateAdmin: RequestHandler = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
-    const payload = req.body;
-    const result = await AdminServices.updateAdmin(id, payload);
+    const { admin } = req.body;
+    const result = await AdminServices.updateAdmin(id, admin);
+
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
-      message: 'Admin Data Retrieve successfully',
+      message: 'Admin Data Updated successfully',
       data: result,
     });
   },

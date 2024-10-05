@@ -20,16 +20,21 @@ const getSingleAdmin = async (id: string) => {
   return result;
 };
 const updateAdmin = async (id: string, payload: Partial<TAdmin>) => {
+  // console.log(payload);
   const { name, ...remainingData } = payload;
-  const modifiedData: Record<string, unknown> = {
+  console.log(name);
+  const modifiedDataUpdate: Record<string, unknown> = {
     ...remainingData,
   };
-  if (name && Object.keys(name).length) {
+
+  if (name && Object.keys(name).length > 0) {
     for (const [key, value] of Object.entries(name)) {
-      modifiedData[`name.${key}`] = value;
+      modifiedDataUpdate[`name.${key}`] = value;
+      // console.log(modifiedDataUpdate);
     }
   }
-  const result = await Admin.findByIdAndUpdate({ id }, modifiedData, {
+  console.log(modifiedDataUpdate);
+  const result = await Admin.findByIdAndUpdate(id, modifiedDataUpdate, {
     new: true,
     runValidators: true,
   });

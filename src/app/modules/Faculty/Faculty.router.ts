@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get('/', FacultyController.getAllFaculty);
 router.get('/:id', FacultyController.getSingleFaculty);
-router.post(
+router.patch(
   '/:id',
   validateRequest(FacultyValidations.updateFacultyValidationSchema),
   FacultyController.updateFaculty,

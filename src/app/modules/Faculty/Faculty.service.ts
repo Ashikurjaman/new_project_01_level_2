@@ -29,7 +29,7 @@ const updateAdmin = async (id: string, payload: Partial<TFaculty>) => {
       modifiedData[`name.${key}`] = value;
     }
   }
-  const result = await Faculty.findByIdAndUpdate({ id }, modifiedData, {
+  const result = await Faculty.findByIdAndUpdate(id, modifiedData, {
     new: true,
     runValidators: true,
   });

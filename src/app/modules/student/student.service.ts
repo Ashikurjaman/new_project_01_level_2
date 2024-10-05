@@ -96,14 +96,16 @@ const getStudentSingleDataFromDb = async (id: string) => {
 // update data
 const updateStudentData = async (id: string, payload: Partial<TStudent>) => {
   const { name, guardian, localGuardian, ...remainingStudentData } = payload;
+  console.log(name);
 
   const modifiedDataUpdate: Record<string, unknown> = {
     ...remainingStudentData,
   };
 
-  if (name && Object.keys(name).length) {
+  if (name && Object.keys(name).length > 0) {
     for (const [key, value] of Object.entries(name)) {
       modifiedDataUpdate[`name.${key}`] = value;
+      console.log(`name.${key}`);
     }
   }
   if (guardian && Object.keys(guardian).length) {
