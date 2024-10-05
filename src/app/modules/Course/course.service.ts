@@ -9,7 +9,10 @@ const createCourseIntoDb = async (payload: TCourse) => {
 };
 
 const getCourseIntoDb = async (query: Record<string, unknown>) => {
-  const courseQuery = new QueryBuilder(CourseModel.find(), query)
+  const courseQuery = new QueryBuilder(
+    CourseModel.find().populate('preRequisiteCourses.course'),
+    query,
+  )
     .filter()
     .sort()
     .paginate()
@@ -19,7 +22,9 @@ const getCourseIntoDb = async (query: Record<string, unknown>) => {
   return result;
 };
 const getSingleCourseIntoDb = async (id: string) => {
-  const result = await CourseModel.findById(id);
+  const result = await CourseModel.findById(id).populate(
+    'preRequisiteCourses.course',
+  );
   return result;
 };
 const deleteSingleCourseIntoDb = async (id: string) => {

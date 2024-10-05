@@ -30,10 +30,14 @@ const courseSchema = new Schema<TCourse>({
   },
   credits: {
     type: Number,
-    unique: true,
     trim: true,
   },
   preRequisiteCourses: [preRequisiteCourseSchema],
+
+  isDeleted: {
+    type: Boolean,
+    default?: false,
+  },
 });
 
 export const CourseModel = model<TCourse>('course', courseSchema);
