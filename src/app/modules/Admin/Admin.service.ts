@@ -33,7 +33,7 @@ const updateAdmin = async (id: string, payload: Partial<TAdmin>) => {
       // console.log(modifiedDataUpdate);
     }
   }
-  console.log(modifiedDataUpdate);
+  console.log(modifiedDataUpdate, '😀');
   const result = await Admin.findByIdAndUpdate(id, modifiedDataUpdate, {
     new: true,
     runValidators: true,
