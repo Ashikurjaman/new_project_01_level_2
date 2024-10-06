@@ -40,4 +40,13 @@ const courseSchema = new Schema<TCourse>({
   },
 });
 
+courseSchema.pre('findOne', async function (next) {
+  this.find({ isDeleted: { $ne: true } });
+  next();
+});
+courseSchema.pre('find', async function (next) {
+  this.find({ isDeleted: { $ne: true } });
+  next();
+});
+
 export const CourseModel = model<TCourse>('course', courseSchema);

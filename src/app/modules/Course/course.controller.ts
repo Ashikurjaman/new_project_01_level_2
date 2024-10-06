@@ -19,7 +19,6 @@ const createCourse: RequestHandler = catchAsync(
 const getAllCourse = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const result = await courseServices.getCourseIntoDb(req.query);
-    console.log(result, 'getall data');
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
@@ -28,10 +27,10 @@ const getAllCourse = catchAsync(
     });
   },
 );
-const getSingleAcademicFaculty = catchAsync(
+const getSingleCourse = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const { facultyId } = req.params;
-    const result = await courseServices.getSingleCourseIntoDb(facultyId);
+    const { id } = req.params;
+    const result = await courseServices.getSingleCourseIntoDb(id);
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
@@ -40,6 +39,21 @@ const getSingleAcademicFaculty = catchAsync(
     });
   },
 );
+
+const updateCourse = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+    const payload = req.body;
+    const result = await courseServices.updateSingleCourseIntoDb(id, payload);
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Course retrieve successfully',
+      data: result,
+    });
+  },
+);
+
 const deleteCourse = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
@@ -57,6 +71,7 @@ const deleteCourse = catchAsync(
 export const courseController = {
   deleteCourse,
   createCourse,
-  getSingleAcademicFaculty,
+  getSingleCourse,
   getAllCourse,
+  updateCourse,
 };
