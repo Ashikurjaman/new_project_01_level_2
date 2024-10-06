@@ -36,7 +36,7 @@ const courseSchema = new Schema<TCourse>({
 
   isDeleted: {
     type: Boolean,
-    default?: false,
+    default: false,
   },
 });
 
