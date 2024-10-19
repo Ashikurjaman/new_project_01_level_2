@@ -1,5 +1,4 @@
 import { TAcademicSemester } from '../AcademicSemester/academicSemester.Interface';
-import { TAdmin } from '../Admin/Admin.interFace';
 import { User } from './users.model';
 
 const findId = async () => {
