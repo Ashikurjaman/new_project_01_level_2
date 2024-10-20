@@ -4,12 +4,16 @@ import { TSemesterRegistration } from './semester.interface';
 import { SemesterModel } from './semester.model';
 import { AcademicSemester } from '../AcademicSemester/academicSemester.model';
 import QueryBuilder from '../../builder/QueryBuilder';
+import { registrationSemester } from './semester.constant';
 
 const createSemesterServices = async (payload: TSemesterRegistration) => {
   const academicSemester = payload?.academicSemester;
 
   const isSemesterRegistrationRunning = await SemesterModel.find({
-    $or: [{ status: 'UPCOMING' }, { status: 'ONGOING' }],
+    $or: [
+      { status: registrationSemester.UPCOMING },
+      { status: registrationSemester.ONGOING },
+    ],
   });
 
   if (isSemesterRegistrationRunning) {
@@ -33,6 +37,7 @@ const createSemesterServices = async (payload: TSemesterRegistration) => {
   const result = SemesterModel.create(payload);
   return result;
 };
+
 const getAllSemester = async (query: Record<string, unknown>) => {
   const semesterRegistrationGetSingleDataQuery = new QueryBuilder(
     SemesterModel.find().populate('academicSemester'),
@@ -48,23 +53,44 @@ const getSingleSemester = async (id: string) => {
   const result = SemesterModel.findById(id);
   return result;
 };
+
 const updateSemester = async (
   id: string,
   payload: Partial<TSemesterRegistration>,
 ) => {
-  const requestedSemester = await SemesterModel.findById(id);
-  if (!requestedSemester) {
+  const currentSemesterStatus = await SemesterModel.findById(id);
+  const requestedStatus = payload?.status;
+  if (!currentSemesterStatus) {
     throw new AppError(httpStatus.NOT_FOUND, 'This semester is not found');
   }
-  if (requestedSemester?.status === 'ENDED') {
+  if (currentSemesterStatus?.status === 'ENDED') {
     throw new AppError(
       httpStatus.BAD_REQUEST,
-      `This semester is already ${requestedSemester?.status}`,
+      `This semester is already ${currentSemesterStatus?.status}`,
+    );
+  }
+
+  if (
+    currentSemesterStatus.status === registrationSemester.UPCOMING &&
+    requestedStatus === registrationSemester.ENDED
+  ) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      `Semester can not change form ${currentSemesterStatus?.status} to ${requestedStatus}`,
+    );
+  }
+  if (
+    currentSemesterStatus.status === registrationSemester.ONGOING &&
+    requestedStatus === registrationSemester.ONGOING
+  ) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      `Semester can not change form ${currentSemesterStatus?.status} to ${requestedStatus}`,
     );
   }
   const result = SemesterModel.findByIdAndUpdate(id, payload, {
-    upsert: true,
     new: true,
+    runValidators: true,
   });
   return result;
 };
