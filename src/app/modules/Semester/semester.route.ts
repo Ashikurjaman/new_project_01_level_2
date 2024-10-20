@@ -14,7 +14,7 @@ router.post(
 );
 router.get('/:id', semesterController.getSingleSemester);
 
-router.put(
+router.patch(
   '/:id',
   validateRequest(
     semesterRegistrationValidation.updateSemesterValidationSchema,

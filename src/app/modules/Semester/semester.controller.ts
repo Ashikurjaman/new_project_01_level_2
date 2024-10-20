@@ -10,17 +10,17 @@ const createSemesterController: RequestHandler = catchAsync(
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
-      message: 'Admin Data Retrieve successfully',
+      message: 'Semester Registration successfully',
       data: result,
     });
   },
 );
 const getSingleSemester: RequestHandler = catchAsync(async (req, res, next) => {
-  const result = await semesterServices.getAllSemester();
+  const result = await semesterServices.getAllSemester(req.params);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Admin Data Retrieve successfully',
+    message: 'Semester get successfully',
     data: result,
   });
 });
@@ -30,7 +30,7 @@ const getAllSemester: RequestHandler = catchAsync(async (req, res, next) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Admin Data Retrieve successfully',
+    message: 'Semester Data Retrieve successfully',
     data: result,
   });
 });
