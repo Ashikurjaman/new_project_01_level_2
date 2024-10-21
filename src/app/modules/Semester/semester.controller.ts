@@ -16,7 +16,8 @@ const createSemesterController: RequestHandler = catchAsync(
   },
 );
 const getSingleSemester: RequestHandler = catchAsync(async (req, res, next) => {
-  const result = await semesterServices.getAllSemester(req.params);
+  const { id } = req.params;
+  const result = await semesterServices.getSingleSemester(id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -25,8 +26,8 @@ const getSingleSemester: RequestHandler = catchAsync(async (req, res, next) => {
   });
 });
 const getAllSemester: RequestHandler = catchAsync(async (req, res, next) => {
-  const { id } = req.params;
-  const result = await semesterServices.getSingleSemester(id);
+  const result = await semesterServices.getAllSemester(req.params);
+
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
