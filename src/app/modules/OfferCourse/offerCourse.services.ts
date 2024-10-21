@@ -7,6 +7,7 @@ import { AcademicDepartment } from '../AcademicDepartment/academicDepartment.mod
 import { CourseModel } from '../Course/course.model';
 import { AcademicFaculty } from '../AcademicFaculty/academicFaculty.model';
 import { Faculty } from '../Faculty/Faculty.model';
+import { hasTimeConflict } from './offerCourse.constant';
 
 const CreateOfferedCourse = async (payload: TOfferedCourse) => {
   const {
@@ -16,6 +17,9 @@ const CreateOfferedCourse = async (payload: TOfferedCourse) => {
     course,
     section,
     faculty,
+    days,
+    startTime,
+    endTime,
   } = payload;
 
   const isSemesterRegistrationExists =
@@ -67,6 +71,25 @@ const CreateOfferedCourse = async (payload: TOfferedCourse) => {
     );
   }
 
+  const existingFacultySchedule = await OfferedCourseModel.find({
+    semesterRegistration,
+    faculty,
+    days: { $in: days },
+  }).select('days startTime endTime');
+
+  const newSchedule = {
+    days,
+    startTime,
+    endTime,
+  };
+
+  if (hasTimeConflict(existingFacultySchedule, newSchedule)) {
+    throw new AppError(
+      httpStatus.CONFLICT,
+      `This faculty is not available in this time please choose other time or day `,
+    );
+  }
+
   const isSectionSemesterAndCourseExists = await OfferedCourseModel.findOne({
     course,
     section,
@@ -86,6 +109,12 @@ const CreateOfferedCourse = async (payload: TOfferedCourse) => {
   return result;
 };
 
+const updateOfferedCourse = async (
+  id: string,
+  payload: Partial<TOfferedCourse>,
+) => {};
+
 export const OfferCourseServices = {
   CreateOfferedCourse,
+  updateOfferedCourse,
 };

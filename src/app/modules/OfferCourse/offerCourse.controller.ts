@@ -13,7 +13,18 @@ const CreateOfferedCourse: RequestHandler = catchAsync(async (req, res) => {
     data: result,
   });
 });
+const updateOfferedCourse: RequestHandler = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await OfferCourseServices.updateOfferedCourse(id, req.body);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Offer Course is created successfully 😆',
+    data: result,
+  });
+});
 
 export const OfferCourseController = {
   CreateOfferedCourse,
+  updateOfferedCourse,
 };
