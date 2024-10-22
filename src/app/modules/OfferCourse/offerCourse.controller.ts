@@ -23,8 +23,40 @@ const updateOfferedCourse: RequestHandler = catchAsync(async (req, res) => {
     data: result,
   });
 });
+const getallOfferCourse: RequestHandler = catchAsync(async (req, res) => {
+  const result = await OfferCourseServices.getAllOfferCourse(req.params);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'All Offer Course is retrieve successfully 😆',
+    data: result,
+  });
+});
+const getSingleOfferCourse: RequestHandler = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await OfferCourseServices.getSingleOfferCourse(id);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Offer Course is retrieve successfully 😆',
+    data: result,
+  });
+});
+const deleteOfferCourse: RequestHandler = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await OfferCourseServices.deleteOfferCourse(id);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Offer Course is retrieve successfully 😆',
+    data: result,
+  });
+});
 
 export const OfferCourseController = {
   CreateOfferedCourse,
   updateOfferedCourse,
+  getallOfferCourse,
+  getSingleOfferCourse,
+  deleteOfferCourse,
 };

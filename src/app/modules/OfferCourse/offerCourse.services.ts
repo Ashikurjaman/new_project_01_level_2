@@ -1,3 +1,4 @@
+import { semesterRegistration } from './../Semester/semester.route';
 import httpStatus from 'http-status';
 import { AppError } from '../../error/AppError';
 import { SemesterModel } from '../Semester/semester.model';
@@ -8,6 +9,7 @@ import { CourseModel } from '../Course/course.model';
 import { AcademicFaculty } from '../AcademicFaculty/academicFaculty.model';
 import { Faculty } from '../Faculty/Faculty.model';
 import { hasTimeConflict } from './offerCourse.constant';
+import QueryBuilder from '../../builder/QueryBuilder';
 
 const CreateOfferedCourse = async (payload: TOfferedCourse) => {
   const {
@@ -111,10 +113,92 @@ const CreateOfferedCourse = async (payload: TOfferedCourse) => {
 
 const updateOfferedCourse = async (
   id: string,
-  payload: Partial<TOfferedCourse>,
-) => {};
+  payload: Pick<TOfferedCourse, 'faculty' | 'days' | 'startTime' | 'endTime'>,
+) => {
+  const { faculty, days, startTime, endTime } = payload;
+
+  const isFacultyExists = await Faculty.findById(faculty);
+  if (!isFacultyExists) {
+    throw new AppError(httpStatus.CONFLICT, `This faculty doesn't exists`);
+  }
+  const isOfferCourseExists = await OfferedCourseModel.findById(id);
+
+  if (!isOfferCourseExists) {
+    throw new AppError(httpStatus.CONFLICT, `Offer Course doesn't exists`);
+  }
+
+  const existingFacultySchedule = await OfferedCourseModel.find({
+    semesterRegistration,
+    faculty,
+    days: { $in: days },
+  }).select('days startTime endTime');
+
+  const newSchedule = {
+    days,
+    startTime,
+    endTime,
+  };
+
+  if (hasTimeConflict(existingFacultySchedule, newSchedule)) {
+    throw new AppError(
+      httpStatus.CONFLICT,
+      `This faculty is not available in this time please choose other time or day `,
+    );
+  }
+  const semesterRegistrationData = isOfferCourseExists.semesterRegistration;
+
+  const semesterRegistrationStatus = await SemesterModel.findById(
+    semesterRegistrationData,
+  ).select('status');
+
+  if (semesterRegistrationStatus?.status !== 'UPCOMING') {
+    throw new AppError(
+      httpStatus.CONFLICT,
+      `Offer Course can't update | because ${semesterRegistrationStatus}`,
+    );
+  }
+  const result = await OfferedCourseModel.findByIdAndUpdate(id, payload, {
+    new: true,
+    runValidators: true,
+  });
+  return result;
+};
+
+const getAllOfferCourse = async (query: Record<string, unknown>) => {
+  const getallOfferCourseFromDb = new QueryBuilder(
+    OfferedCourseModel.find(),
+    query,
+  )
+    .filter()
+    .sort()
+    .fields()
+    .paginate();
+
+  const result = await getallOfferCourseFromDb.modelQuery;
+  return result;
+};
+const getSingleOfferCourse = async (id: string) => {
+  const result = await OfferedCourseModel.findById(id);
+  return result;
+};
+const deleteOfferCourse = async (id: string) => {
+  const data = await OfferedCourseModel.findById(id);
+  const semesterRegistrationData = await SemesterModel.findById(
+    data?.semesterRegistration,
+  ).select('status');
+  if (semesterRegistrationData?.status !== 'UPCOMING') {
+    throw new AppError(
+      httpStatus.CONFLICT,
+      `This semester already ${semesterRegistrationData?.status}`,
+    );
+  }
+  return data;
+};
 
 export const OfferCourseServices = {
   CreateOfferedCourse,
   updateOfferedCourse,
+  getAllOfferCourse,
+  getSingleOfferCourse,
+  deleteOfferCourse,
 };
