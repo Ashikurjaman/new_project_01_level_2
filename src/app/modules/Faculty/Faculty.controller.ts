@@ -5,7 +5,7 @@ import httpStatus from 'http-status';
 import { FacultyServices } from './Faculty.service';
 
 const getAllFaculty: RequestHandler = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response) => {
     const result = await FacultyServices.getAllAdmin(req.query);
     sendResponse(res, {
       statusCode: httpStatus.OK,
@@ -16,7 +16,7 @@ const getAllFaculty: RequestHandler = catchAsync(
   },
 );
 const getSingleFaculty: RequestHandler = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response) => {
     const { id } = req.params;
     const result = await FacultyServices.getSingleAdmin(id);
     sendResponse(res, {
