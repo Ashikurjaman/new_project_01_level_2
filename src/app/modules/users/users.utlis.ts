@@ -1,5 +1,8 @@
 import { TAcademicSemester } from '../AcademicSemester/academicSemester.Interface';
+<<<<<<< HEAD
 import { TAdmin } from '../Admin/Admin.interFace';
+=======
+>>>>>>> d451b20c80105bfe0ec156e99cd02742fd04ed34
 import { User } from './users.model';
 
 const findId = async () => {

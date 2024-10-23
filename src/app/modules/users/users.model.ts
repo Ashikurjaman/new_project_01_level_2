@@ -1,6 +1,13 @@
+<<<<<<< HEAD
 import { model, Schema } from 'mongoose';
 import bcrypt from 'bcrypt';
 import { TUser } from './users.interface';
+=======
+/* eslint-disable @typescript-eslint/no-this-alias */
+import { model, Schema } from 'mongoose';
+import bcrypt from 'bcrypt';
+import { TUser, UserModel } from './users.interface';
+>>>>>>> d451b20c80105bfe0ec156e99cd02742fd04ed34
 import config from '../../config';
 
 const userSchema = new Schema<TUser>(
@@ -49,4 +56,18 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
+<<<<<<< HEAD
 export const User = model<TUser>('User', userSchema);
+=======
+userSchema.statics.isUserExistsByCustomId = async function name(id: string) {
+  return await User.findOne({ id });
+};
+userSchema.statics.isPasswordMatched = async function name(
+  planePasswordText: string,
+  hashedPassword: string,
+) {
+  return await bcrypt.compare(planePasswordText, hashedPassword);
+};
+
+export const User = model<TUser, UserModel>('User', userSchema);
+>>>>>>> d451b20c80105bfe0ec156e99cd02742fd04ed34
