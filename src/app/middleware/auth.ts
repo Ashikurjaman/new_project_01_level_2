@@ -4,8 +4,9 @@ import catchAsync from '../utils/catchAsync';
 import { AppError } from '../error/AppError';
 import httpStatus from 'http-status';
 import config from '../config';
+import { TUserRole } from '../modules/users/users.interface';
 
-export const auth = () => {
+export const auth = (...requestedRoles: TUserRole[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     //validation
 
@@ -23,11 +24,18 @@ export const auth = () => {
             httpStatus.UNAUTHORIZED,
             'You are not Authorized !',
           );
-        } // decoded undefined
+        }
+        const role = (decoded as JwtPayload).role;
+        if (requestedRoles && !requestedRoles.includes(role)) {
+          throw new AppError(
+            httpStatus.UNAUTHORIZED,
+            'You are not Authorized !',
+          );
+        }
 
-        req.userData = decoded as JwtPayload;
+        req.user = decoded as JwtPayload;
+        next();
       },
     );
-    next();
   });
 };

@@ -28,7 +28,7 @@ const getSingleFaculty: RequestHandler = catchAsync(
   },
 );
 const updateFaculty: RequestHandler = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response) => {
     const { id } = req.params;
     const { faculty } = req.body;
     const result = await FacultyServices.updateAdmin(id, faculty);
@@ -41,7 +41,7 @@ const updateFaculty: RequestHandler = catchAsync(
   },
 );
 const deleteFaculty: RequestHandler = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response) => {
     const { id } = req.params;
 
     const result = await FacultyServices.deleteAdmin(id);

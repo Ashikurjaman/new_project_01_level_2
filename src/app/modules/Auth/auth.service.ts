@@ -28,7 +28,7 @@ const loginUser = async (payload: TLoginUser) => {
     throw new AppError(httpStatus.FORBIDDEN, 'Password do not match');
   }
 
-  const jwtPayLoad = { userId: userExists, role: userExists.role };
+  const jwtPayLoad = { userId: userExists.id, role: userExists.role };
   const accessToken = jwt.sign(jwtPayLoad, config.jwt_secret_token as string, {
     expiresIn: '1h',
   });
