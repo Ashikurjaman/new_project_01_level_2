@@ -1,4 +1,4 @@
-import express, { NextFunction } from 'express';
+import express from 'express';
 import { userController } from './users.controller';
 
 import { studentValidation } from '../student/student.validate';
@@ -18,11 +18,13 @@ router.post(
 );
 router.post(
   '/create-admin',
+  auth(USER_ROLE.admin),
   validateRequest(AdminValidations.createAdminValidationSchema),
   userController.createAdmin,
 );
 router.post(
   '/create-faculty',
+  auth(USER_ROLE.admin),
   validateRequest(FacultyValidations.createFacultyValidationSchema),
   userController.createFaculty,
 );
