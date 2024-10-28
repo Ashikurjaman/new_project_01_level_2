@@ -16,5 +16,5 @@ app.use(notFound);
 //global error handler route
 app.use(globalErrorHandler);
 
-console.log(process.cwd());
+
 export default app;

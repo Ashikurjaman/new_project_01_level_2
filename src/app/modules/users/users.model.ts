@@ -15,10 +15,14 @@ const userSchema = new Schema<TUser>(
     password: {
       type: String,
       required: true,
+      select: 0,
     },
     needsPasswordsChange: {
       type: Boolean,
       default: true,
+    },
+    needsPasswordsChangeAt: {
+      type: Date,
     },
     role: {
       type: String,
@@ -51,7 +55,7 @@ userSchema.pre('save', async function (next) {
 });
 
 userSchema.statics.isUserExistsByCustomId = async function name(id: string) {
-  return await User.findOne({ id });
+  return await User.findOne({ id }).select('+password');
 };
 userSchema.statics.isPasswordMatched = async function name(
   planePasswordText: string,

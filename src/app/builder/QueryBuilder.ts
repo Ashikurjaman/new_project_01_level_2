@@ -8,7 +8,7 @@ class QueryBuilder<T> {
     this.modelQuery = modelQuery;
     this.query = query;
   }
-  search(searchAbleFields: String[]) {
+  search(searchAbleFields: string[]) {
     const searchTerm = this?.query?.searchTerm;
     if (searchTerm) {
       this.modelQuery = this.modelQuery.find({
