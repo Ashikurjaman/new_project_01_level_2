@@ -63,5 +63,13 @@ userSchema.statics.isPasswordMatched = async function name(
 ) {
   return await bcrypt.compare(planePasswordText, hashedPassword);
 };
+userSchema.statics.isPasswordChangeBeforeTokenIssued = function (
+  passwordChangeBeforeIssueDate,
+  passwordChangeAfterIssueDate,
+) {
+  const needTimeChangeFormate =
+    new Date(passwordChangeBeforeIssueDate).getTime() / 1000;
+  return needTimeChangeFormate > passwordChangeAfterIssueDate;
+};
 
 export const User = model<TUser, UserModel>('User', userSchema);

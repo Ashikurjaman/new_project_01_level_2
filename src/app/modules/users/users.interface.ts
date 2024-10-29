@@ -18,6 +18,10 @@ export interface UserModel extends Model<TUser> {
     planePasswordText: string,
     hashedPassword: string,
   ): Promise<boolean>;
+  isPasswordChangeBeforeTokenIssued(
+    passwordChangeBeforeIssueDate: Date,
+    passwordChangeAfterIssueDate: number,
+  ): boolean;
 }
 
 export type TUserRole = keyof typeof USER_ROLE;
