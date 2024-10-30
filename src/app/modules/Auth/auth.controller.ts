@@ -42,7 +42,7 @@ const refreshToken: RequestHandler = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Login Successfully',
+    message: 'Refresh Token Create Successfully',
     data: result,
   });
 });

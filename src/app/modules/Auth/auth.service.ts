@@ -92,7 +92,7 @@ const refreshToken = async (token: string) => {
     token,
     config.jwt_secret_token as string,
   ) as JwtPayload;
-  const { userId, role, iat } = decoded;
+  const { userId, iat } = decoded;
   const userExists = await User.isUserExistsByCustomId(userId);
   if (!userExists) {
     throw new AppError(httpStatus.FORBIDDEN, 'User not found');
